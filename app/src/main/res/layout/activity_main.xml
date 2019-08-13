@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_notification_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Notification"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_notification_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Update Notification"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_notification_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Cancel Notification"/>
+
+</LinearLayout>
