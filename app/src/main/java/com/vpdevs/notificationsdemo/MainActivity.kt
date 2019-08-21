@@ -12,8 +12,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    val CHANNEL_ID = "notificationsdemo"
-    private val NOTIFICATION_ID = 0
+    private val mCHANNELID = "notifications_demo"
+    private val mNOTIFICATIONID = 0
     private lateinit var notificationManager: NotificationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,65 +23,59 @@ class MainActivity : AppCompatActivity() {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         button_notification_create.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                createNotificationAboveAPI26()
-            } else {
-                createNotificationBelowAPI26()
-            }
+            createNotifications()
         }
 
         button_notification_cancel.setOnClickListener {
-            notificationManager.cancel(NOTIFICATION_ID)
+            notificationManager.cancel(mNOTIFICATIONID)
         }
 
         button_notification_update.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                updateNotification()
-            }
+            updateNotification()
         }
     }
 
-    private fun createNotificationBelowAPI26() {
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("Basic Notification")
-            .setContentText("This is a Simple and Basic Notification")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-        builder.build()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun createNotificationAboveAPI26() {
-        val name = "Vhp"
-        val descriptionText = "This is a simple and Basic Notification"
-        val importance = NotificationManager.IMPORTANCE_HIGH
-        val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-            description = descriptionText
-            enableVibration(true)
+    private fun updateNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.createNotificationChannel(getNotificationChannel())
         }
-        val notifyBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("Basic Notification")
-            .setContentText("This is a Simple and Basic Notification")
-        notificationManager.createNotificationChannel(channel)
-        notificationManager.notify(NOTIFICATION_ID, notifyBuilder.build())
+        notificationManager.notify(
+            mNOTIFICATIONID,
+            getNotificationBuilder(
+                "Updated Notification",
+                "This is a Simple,Basic and Updated Notification"
+            )?.build()
+        )
+    }
+
+    private fun createNotifications() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.createNotificationChannel(getNotificationChannel())
+        }
+        notificationManager.notify(
+            mNOTIFICATIONID,
+            getNotificationBuilder(
+                "Basic Notification",
+                "This is a Simple and Basic Notification"
+            )?.build()
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun updateNotification() {
+    private fun getNotificationChannel(): NotificationChannel {
         val name = "Vhp"
         val descriptionText = "This is a simple and Basic Notification"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+        return NotificationChannel(mCHANNELID, name, importance).apply {
             description = descriptionText
             enableVibration(true)
         }
-        val notifyBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+    }
+
+    private fun getNotificationBuilder(title: String, description: String): NotificationCompat.Builder? {
+        return NotificationCompat.Builder(this, mCHANNELID)
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("Updated Notification")
-            .setContentText("This is a Simple , Basic and Updated Notification")
-        notificationManager.createNotificationChannel(channel)
-        notificationManager.notify(NOTIFICATION_ID, notifyBuilder.build())
+            .setContentTitle(title)
+            .setContentText(description)
     }
 }
