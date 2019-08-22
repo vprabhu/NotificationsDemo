@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NotificationsDemo</string>
+    <string name="info_notification_landing">Notification Landing</string>
 </resources>
