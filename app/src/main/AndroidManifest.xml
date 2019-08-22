@@ -10,9 +10,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <receiver
-                android:name=".ReplyReceiver"
+                android:name=".NotificationDismissReceiver"
                 android:enabled="true"
                 android:exported="false"></receiver>
+        <receiver
+                android:name=".ReplyReceiver"
+                android:enabled="true"
+                android:exported="false" />
 
         <activity android:name=".LandingActivity" />
         <activity android:name=".MainActivity">

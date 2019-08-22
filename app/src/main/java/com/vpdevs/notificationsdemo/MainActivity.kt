@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private val mChannelID = "notifications_demo"
     private val mNotificationID = 0
     private val mReplyNotificationID = 1
+    private val mProgressNotificationID = 2
     private lateinit var notificationManager: NotificationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +42,14 @@ class MainActivity : AppCompatActivity() {
         button_notification_reply.setOnClickListener {
             createReplyNotifications()
         }
+
+        button_notification_show_progress.setOnClickListener {
+            createProgressNotification()
+        }
+
+        button_notification_cancel_progress.setOnClickListener {
+            cancelProgressNotification()
+        }
     }
 
     private fun createNotifications() {
@@ -56,14 +65,15 @@ class MainActivity : AppCompatActivity() {
                 "Basic Notification",
                 "This is a Simple and Basic Notification"
             )?.setContentIntent(landingPendingIntent)
+                ?.setDeleteIntent(getNotificationDismissIntent())
                 ?.build()
         )
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getNotificationChannel(): NotificationChannel {
-        val name = "Vhp"
-        val descriptionText = "This is a simple and Basic Notification"
+        val name = "Download Channel"
+        val descriptionText = "Controls Download Notification"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         return NotificationChannel(mChannelID, name, importance).apply {
             description = descriptionText
@@ -143,6 +153,37 @@ class MainActivity : AppCompatActivity() {
             )
         }
         return pendingIntent
+    }
+
+
+    private fun createProgressNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.createNotificationChannel(getNotificationChannel())
+        }
+        val builder = getNotificationBuilder(
+            "Progress Notification",
+            "Download in Progress"
+        )
+        builder?.setProgress(100, 0, true)
+        notificationManager.notify(
+            mProgressNotificationID,
+            builder?.build()
+        )
+    }
+
+    private fun cancelProgressNotification() {
+        notificationManager.cancel(mProgressNotificationID)
+    }
+
+
+    private fun getNotificationDismissIntent(): PendingIntent? {
+        val intent = Intent(this@MainActivity, NotificationDismissReceiver::class.java)
+        return PendingIntent.getBroadcast(
+            this@MainActivity,
+            mNotificationID,
+            intent,
+            0
+        )
     }
 
 }

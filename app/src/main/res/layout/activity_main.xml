@@ -20,14 +20,14 @@
             android:id="@+id/button_notification_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="Update Notification"/>
 
     <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_notification_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="Cancel Notification"/>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -36,5 +36,19 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Create Reply Notification"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_notification_show_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Show Progress Notification"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_notification_cancel_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Cancel Progress Notification"/>
 
 </LinearLayout>
